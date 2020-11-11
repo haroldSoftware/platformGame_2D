@@ -1,4 +1,6 @@
-This is my platform game. PLAYER IT HERE: https://pages.git.generalassemb.ly/hujikolp1/Project_1_Platform_Game/
+This is my platform game. PLAYER IT HERE: https://haroldsoftware.github.io/platformGame_2D/
+
+This uses vanilla or static JavaScript, HTML, and CSS. 
 
 The player is a walrus that needs to jump on platforms up to the star.
 
