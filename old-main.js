@@ -4,8 +4,8 @@
 
 let canvas = document.getElementById("canvas")
 context = canvas.getContext("2d");
-width = window.innerWidth;
-height = window.innerHeight;
+width = 2000;
+height = 1000;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -16,8 +16,8 @@ canvas.height = window.innerHeight;
 //----------------------------------------------------------------------------//
 
 document.body.style.backgroundImage = "url(images/backgroundImg.jpg)";
-// document.body.style.backgroundSize = "500px 500px";
-// document.body.style.backgroundSize = 'cotain';
+document.body.style.backgroundSize = "1000px 1000px";
+document.body.style.backgroundSize = 'cover';
 
 (function () {
     let requestAnimationFrame = window.requestAnimationFrame;
@@ -46,6 +46,7 @@ let player = {
   speed: 5,
   velocity_X: 0,
   velocity_Y: 0,
+
   jumping: false,
   grounded: false
 };
@@ -61,6 +62,40 @@ let winningStar = {
   y: 95,
   width: 100,
   height: 100
+}
+
+//----------------------------------------------------------------------------//
+
+//----------------------------------------------------------------------------//
+//------------------------LION OBJECTS AND FIREBALL---------------------------//
+//----------------------------------------------------------------------------//
+
+let rocketObj1 = {
+  x: 200,
+  y: 900,
+  width: 75,
+  height: 75
+}
+
+let eagleObj2 = {
+  x: 600,
+  y: 900,
+  width: 50,
+  height: 50
+}
+
+let fireObj3 = {
+  x: 700,
+  y: 900,
+  width: 41,
+  height: 41
+}
+
+let fireBall = {
+  x: 600,
+  y: 800,
+  width: 50,
+  height: 50
 }
 
 //----------------------------------------------------------------------------//
@@ -150,46 +185,59 @@ platforms.push({
 //----------------------------------------------------------------------------//
 
 platforms.push({
+    x: 1500,
+    y: 900,
+    width: 120,
+    height: 40
+});
+platforms.push({
     x: 1300,
     y: 800,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 1100,
     y: 700,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 900,
     y: 600,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 700,
     y: 500,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 500,
     y: 400,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 300,
     y: 300,
     width: 120,
-    height: 20
+    height: 40
 });
 platforms.push({
     x: 100,
     y: 200,
     width: 120,
-    height: 20
+    height: 40
+});
+
+platforms.push({
+    x: 850,
+    y: 700,
+    width: 40,
+    height: 120
 });
 
 //----------------------------------------------------------------------------//
@@ -265,6 +313,7 @@ function movementFunc() {
 
     context.clearRect(0, 0, width, height);
     context.fillStyle = "Aquamarine";
+
     context.beginPath();
 
 //----------------------------------------------------------------------------//
@@ -315,9 +364,34 @@ function movementFunc() {
       winningCondition == "top" || winningCondition == "bottom") {
       alert("YOU WIN! --- press enter to RESTART");
       // throw new Error(); is one way to end the program
-      player.x = width - 100;
-      player.y = height - 15; 
-      location.reload(); // reload is better
+      location.reload(); // reload is better though
+    }
+
+    let lionOneDeath = collisionCheck(player, rocketObj1);
+    let lionTwoDeath = collisionCheck(player, eagleObj2);
+    let lionThreeDeath = collisionCheck(player, fireObj3);
+    let fireBallCollision = collisionCheck(player, fireBall);
+
+    if (lionOneDeath == "left" || lionOneDeath == "right" ||
+      lionOneDeath == "top" || lionOneDeath == "bottom") {
+      alert("YOU LOSE! --- press enter to RESTART");
+      location.reload();
+    }
+    if (lionTwoDeath == "left" || lionTwoDeath == "right" ||
+      lionTwoDeath == "top" || lionTwoDeath == "bottom") {
+      alert("YOU LOSE! --- press enter to RESTART");
+      location.reload();
+    }
+    if (lionThreeDeath == "left" || lionThreeDeath == "right" ||
+      lionThreeDeath == "top" || lionThreeDeath == "bottom") {
+      alert("YOU LOSE! --- press enter to RESTART");
+      location.reload();
+    }
+    if (fireBallCollision == "left" || fireBallCollision == "right" ||
+      fireBallCollision == "top" || fireBallCollision == "bottom") {
+      alert("YOU LOSE! --- press enter to RESTART");
+      location.reload();
+      // throw new Error();
     }
 
 //----------------------------------------------------------------------------//
@@ -328,60 +402,119 @@ function movementFunc() {
 
     context.fill();
 
+    // THIS WILL DRAW A BASIC RECTANGLE
+
+    // context.fillStyle = "gold";
+    // context.fillRect(player.x,
+    //   player.y,
+    //   player.width,
+    //   player.height);
+
     let playerImg = new Image();
     playerImg.src = "images/walrus.svg";
     context.drawImage(playerImg,
       player.x,
       player.y,
       player.width,
-      player.height
-    );
+      player.height);
+
+//----------------------------------------------------------------------------//
 
     let winningTouch = new Image();
     winningTouch.src = "images/star.svg";
     context.drawImage(winningTouch, 110, 95, 100, 100);
 
+    let rocket1 = new Image();
+    rocket1.src = "images/rocket.png";
+    context.drawImage(rocket1, rocketObj1.x, rocketObj1.y, fireBall.width, fireBall.height);
+
+    let eagle2 = new Image();
+    eagle2.src = "images/eagle.svg";
+    context.drawImage(eagle2, 600, 900, 75, 75);
+
+    let fireBall3 = new Image();
+    fireBall3.src = "images/betterFire.svg";
+    context.drawImage(fireBall3, fireObj3.x, fireObj3.y, fireBall.width, fireBall.height);
+
+//----------------------------------------------------------------------------//
+//-------------------------MAKE LION ONE MOVE---------------------------------//
 //----------------------------------------------------------------------------//
 
+    let lionOnevelocity_Y = 15;
+
+    if (rocketObj1.y == 105)
+    {
+      rocketObj1.y = 900;
+    }
+
+    rocketObj1.y -= lionOnevelocity_Y;
+
+
+//----------------------------------------------------------------------------//
+
+
+//----------------------------------------------------------------------------//
+//-------------------------MAKE FIREBALL MOVE---------------------------------//
+//----------------------------------------------------------------------------//
+
+    let fireBallImg = new Image();
+    fireBallImg.src = "images/betterFire.svg";
+    context.drawImage(fireBallImg,
+      fireBall.x, fireBall.y,
+      fireBall.width,
+      fireBall.height);
+
+    let fireBallvelocity_Y = 5;
+
+    if (fireBall.y == 250)
+    {
+      fireBall.y = 800;
+    }
+
+    fireBall.y -= fireBallvelocity_Y;
+
+
+//----------------------------------------------------------------------------//
+
+//----------------------------------------------------------------------------//
+//------------------------MAKE FIREBALL THREE MOVE----------------------------//
+//----------------------------------------------------------------------------//
+
+  let lionThreevelocity_X = 5;
+
+  if (fireObj3.x == 1400) {
+    fireObj3.x = 700;
+  }
+
+  fireObj3.x += lionThreevelocity_X;
+
+// CIRCULAR MOVEMENT LOGIC
+// NEEDS REPAIR TO WORK
+
+
+// let angle = Math.PI / 2;
+// function animate(time, lastTime) {
+//   if (lastTime != null) {
+//     angle += (time - lastTime) * 0.001;
+//   }
+//   fireObj3.y = (Math.sin(angle) * 20) + "px";
+//   fireObj3.x = (Math.cos(angle) * 200) + "px";
+//   requestAnimationFrame(newTime => animate(newTime, time));
+// }
+// requestAnimationFrame(animate);
 
 //----------------------------------------------------------------------------//
 //------------------------MAKE PLATFORM MOVE----------------------------------//
 //----------------------------------------------------------------------------//
 
-  var randomnumber = 
-    Math.floor(Math.random() * (700 - 50 + 1)) + 50;
-
+  let lastPlatform = platforms.length - 1;
   let platformVelocity = 2;
-  let platform6 = platforms.length - 2;
-  platforms[platform6].y -= platformVelocity;
-  if (platforms[platform6].y <= 40) {
-    platforms[platform6].y = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
-  }
-  let platform5 = platforms.length - 3;
-  platforms[platform5].y -= platformVelocity;
-  if (platforms[platform5].y <= 40) {
-    platforms[platform5].y = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
-  }
-  let platform4 = platforms.length - 4;
-  platforms[platform4].y -= platformVelocity;
-  if (platforms[platform4].y <= 40) {
-    platforms[platform4].y = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
-  }
-  let platform3 = platforms.length - 5;
-  platforms[platform3].y -= platformVelocity;
-  if (platforms[platform3].y <= 40) {
-    platforms[platform3].y = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
-  }
-  let platform2 = platforms.length - 6;
-  platforms[platform2].y -= platformVelocity;
-  if (platforms[platform2].y <= 40) {
-    platforms[platform2].y = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
-  }
-  let platform1 = platforms.length - 7;
-  platforms[platform1].y -= platformVelocity;
-  if (platforms[platform1].y <= 40) {
-    platforms[platform1].y = 800;
-  }
+
+  platforms[lastPlatform].y -= platformVelocity;
+
+  if (platforms[lastPlatform].y == 300) {
+     platforms[lastPlatform].y = 700;
+   }
 
 
 //----------------------------------------------------------------------------//
@@ -509,6 +642,23 @@ window.addEventListener("load", function () {
 });
 
 //----------------------------------------------------------------------------//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
