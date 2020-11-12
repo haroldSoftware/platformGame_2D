@@ -4,10 +4,10 @@
 
 let canvas = document.getElementById("canvas")
 context = canvas.getContext("2d");
-width = window.innerWidth;
-height = window.innerHeight;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+width = window.innerWidth / 1.1;
+height = window.innerHeight / 1.1;
+canvas.width = width;
+canvas.height = height;
 
 //----------------------------------------------------------------------------//
 
@@ -15,7 +15,7 @@ canvas.height = window.innerHeight;
 //-----------------------------BACKGROUND IMAGE-------------------------------//
 //----------------------------------------------------------------------------//
 
-document.body.style.backgroundImage = "url(images/backgroundImg.jpg)";
+// document.body.style.backgroundImage = "url(images/backgroundImg.jpg)";
 // document.body.style.backgroundSize = "500px 500px";
 // document.body.style.backgroundSize = 'cotain';
 

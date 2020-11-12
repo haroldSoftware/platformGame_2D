@@ -1,12 +1,11 @@
-This is my platform game. PLAYER IT HERE: https://haroldsoftware.github.io/platformGame_2D/
+This is my platform game. PLAY IT HERE: https://haroldsoftware.github.io/platformGame_2D/
 
-This uses vanilla or static JavaScript, HTML, and CSS. 
+The languages used to build this game are static JavaScript, HTML, and CSS. 
 
 The player is a walrus that needs to jump on platforms up to the star.
 
 If the player gets to the star, they win.
 
-If they run into the eagle, the rocket, or a fireball, they lose.
 --------------------------------------------------------------------------------
 
 This uses collision detection on the canvas element. Since canvas has an x and
@@ -21,13 +20,13 @@ then checked for collisions.
 
 Checking if the player and an object collide uses a loop that goes over all
 of the existing objects. This seems like an inefficient way to do collision
-detection but it works with a program this size.
+detection but it works with a program this size, however, this is a common method.
 
-Moving enemies are put into the game by changing thier objects coordinates each
-animation frame.
+Moving enemies were removed from the game. Objects coordinates are updated each
+animation frame, which is about 1 milli second.
 --------------------------------------------------------------------------------
 
-To make this game better, moving platforms could be added. Adding circular or
+To make this game better, more moving platforms could be added. Adding circular or
 elliptical movement to enemy objects would make this harder and more
 interesting. Adding new features in general is the next stage. For instance,
 jumping on top of an enemy (having a bottom collision) could beat the enemy.
