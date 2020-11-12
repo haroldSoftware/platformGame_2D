@@ -24,6 +24,7 @@ detection but it works with a program this size, however, this is a common metho
 
 Moving enemies were removed from the game. Objects coordinates are updated each
 animation frame, which is about 1 milli second.
+
 --------------------------------------------------------------------------------
 
 To make this game better, more moving platforms could be added. Adding circular or
